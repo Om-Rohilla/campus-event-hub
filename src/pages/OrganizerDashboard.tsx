@@ -1,0 +1,164 @@
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { LogOut, Plus, Bell, BarChart3 } from 'lucide-react';
+import { getCurrentUser, clearCurrentUser, mockOrganizerEvents } from '@/lib/mockData';
+import { User, Event } from '@/types';
+import EventCard from '@/components/dashboard/EventCard';
+import EmptyState from '@/components/dashboard/EmptyState';
+
+const OrganizerDashboard = () => {
+    const navigate = useNavigate();
+    const [user, setUser] = useState<User | null>(null);
+    const [events] = useState<Event[]>(mockOrganizerEvents);
+
+    useEffect(() => {
+        const currentUser = getCurrentUser();
+        if (!currentUser || currentUser.role !== 'organizer') {
+            navigate('/auth');
+            return;
+        }
+        setUser(currentUser);
+    }, [navigate]);
+
+    const handleLogout = () => {
+        clearCurrentUser();
+        navigate('/');
+    };
+
+    const handleCreateEvent = () => {
+        // In production, this would navigate to event creation page
+        alert('Event creation feature coming soon!');
+    };
+
+    if (!user) return null;
+
+    return (
+        <div className="min-h-screen bg-gradient-surface">
+            {/* Header */}
+            <header className="bg-card border-b border-border/50 sticky top-0 z-40 backdrop-blur-xl bg-card/95">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                    <div className="flex items-center justify-between">
+                        {/* Logo */}
+                        <div className="flex items-center gap-2">
+                            <div className="w-10 h-10 rounded-full bg-gradient-hero flex items-center justify-center">
+                                <span className="text-primary-foreground font-bold">E</span>
+                            </div>
+                            <span className="font-display text-xl font-semibold text-foreground">
+                                EventFlow
+                            </span>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex items-center gap-3">
+                            <button className="p-2 rounded-lg hover:bg-muted transition-colors">
+                                <BarChart3 className="w-5 h-5 text-muted-foreground" />
+                            </button>
+                            <button className="p-2 rounded-lg hover:bg-muted transition-colors">
+                                <Bell className="w-5 h-5 text-muted-foreground" />
+                            </button>
+                            <button
+                                onClick={handleLogout}
+                                className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+                            >
+                                <LogOut className="w-4 h-4" />
+                                <span className="hidden sm:inline text-sm font-medium">Logout</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            {/* Main Content */}
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                {/* Welcome Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="mb-8"
+                >
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div>
+                            <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-2">
+                                Welcome, {user.name.split(' ')[0]}! 👋
+                            </h1>
+                            <p className="text-muted-foreground text-lg">
+                                {user.department} • {user.organizerRole === 'teacher' ? 'Faculty' : 'Club Lead'}
+                            </p>
+                        </div>
+
+                        <button
+                            onClick={handleCreateEvent}
+                            className="btn-primary px-6 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 whitespace-nowrap"
+                        >
+                            <Plus className="w-5 h-5" />
+                            Create New Event
+                        </button>
+                    </div>
+                </motion.div>
+
+                {/* Stats Cards */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="grid sm:grid-cols-3 gap-4 mb-8"
+                >
+                    <div className="card-elevated p-5 border border-border/50">
+                        <p className="text-sm text-muted-foreground mb-1">Total Events</p>
+                        <p className="text-3xl font-display font-bold text-foreground">{events.length}</p>
+                    </div>
+                    <div className="card-elevated p-5 border border-border/50">
+                        <p className="text-sm text-muted-foreground mb-1">Total Registrations</p>
+                        <p className="text-3xl font-display font-bold text-foreground">
+                            {events.reduce((sum, e) => sum + e.attendees, 0)}
+                        </p>
+                    </div>
+                    <div className="card-elevated p-5 border border-border/50">
+                        <p className="text-sm text-muted-foreground mb-1">Avg. Attendance</p>
+                        <p className="text-3xl font-display font-bold text-foreground">
+                            {events.length > 0 ? Math.round(events.reduce((sum, e) => sum + e.attendees, 0) / events.length) : 0}
+                        </p>
+                    </div>
+                </motion.div>
+
+                {/* My Events Section */}
+                <section>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="mb-6"
+                    >
+                        <h2 className="font-display text-2xl font-semibold text-foreground mb-2">
+                            My Events
+                        </h2>
+                        <p className="text-muted-foreground">
+                            Events you're organizing
+                        </p>
+                    </motion.div>
+
+                    {/* Events Grid */}
+                    {events.length > 0 ? (
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {events.map((event, index) => (
+                                <EventCard key={event.id} event={event} index={index} />
+                            ))}
+                        </div>
+                    ) : (
+                        <EmptyState
+                            title="No Events Yet"
+                            description="Create your first event to get started with EventFlow"
+                            icon="calendar"
+                            actionLabel="Create Event"
+                            onAction={handleCreateEvent}
+                        />
+                    )}
+                </section>
+            </main>
+        </div>
+    );
+};
+
+export default OrganizerDashboard;

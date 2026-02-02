@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import campusVideo from "@/assets/campus-life.mp4";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 
 const Hero = () => {
+  const { openAuth } = useAuthModal();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
       {/* Video Container - Contained Size */}
@@ -79,13 +82,13 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0"
           >
-            <a
-              href="#cta"
+            <button
+              onClick={openAuth}
               className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold rounded-full bg-accent text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
               Get Started
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
-            </a>
+            </button>
             <a
               href="#solution"
               className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold rounded-full bg-white/90 text-foreground shadow-lg hover:bg-white transition-all duration-300"

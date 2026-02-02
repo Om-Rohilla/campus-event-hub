@@ -6,19 +6,24 @@ import AudienceSection from "@/components/landing/AudienceSection";
 import PreviewSection from "@/components/landing/PreviewSection";
 import FinalCTA from "@/components/landing/FinalCTA";
 import Footer from "@/components/landing/Footer";
+import { AuthModalProvider } from "@/contexts/AuthModalContext";
+import AuthModal from "@/components/auth/AuthModal";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <Hero />
-      <ProblemSection />
-      <SolutionSection />
-      <AudienceSection />
-      <PreviewSection />
-      <FinalCTA />
-      <Footer />
-    </div>
+    <AuthModalProvider>
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <Hero />
+        <ProblemSection />
+        <SolutionSection />
+        <AudienceSection />
+        <PreviewSection />
+        <FinalCTA />
+        <Footer />
+        <AuthModal />
+      </div>
+    </AuthModalProvider>
   );
 };
 

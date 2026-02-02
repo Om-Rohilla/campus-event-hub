@@ -2,10 +2,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.svg";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const { openAuth } = useAuthModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,11 +76,10 @@ const Navbar = () => {
                     />
                   )}
                   <span
-                    className={`relative z-10 ${
-                      activeSection === link.id
-                        ? "text-primary"
-                        : "text-gray-600 hover:text-foreground"
-                    }`}
+                    className={`relative z-10 ${activeSection === link.id
+                      ? "text-primary"
+                      : "text-gray-600 hover:text-foreground"
+                      }`}
                   >
                     {link.label}
                   </span>
@@ -90,14 +91,14 @@ const Navbar = () => {
             <div className="w-px h-8 bg-gray-300" />
 
             {/* CTA Button */}
-            <a
-              href="#cta"
+            <button
+              onClick={openAuth}
               className="group relative inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white overflow-hidden rounded-full transition-all duration-300"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary rounded-full transition-transform duration-500 group-hover:scale-105" />
               <span className="relative z-10">Get Started</span>
               <Sparkles className="relative z-10 w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
-            </a>
+            </button>
           </div>
 
           {/* Mobile Navbar */}
@@ -198,16 +199,14 @@ const Navbar = () => {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                       onClick={() => setIsOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-base font-medium transition-all duration-200 ${
-                        activeSection === link.id
-                          ? "bg-primary/10 text-primary"
-                          : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-                      }`}
+                      className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-base font-medium transition-all duration-200 ${activeSection === link.id
+                        ? "bg-primary/10 text-primary"
+                        : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                        }`}
                     >
                       <div
-                        className={`w-2 h-2 rounded-full ${
-                          activeSection === link.id ? "bg-accent" : "bg-muted-foreground/30"
-                        }`}
+                        className={`w-2 h-2 rounded-full ${activeSection === link.id ? "bg-accent" : "bg-muted-foreground/30"
+                          }`}
                       />
                       {link.label}
                     </motion.a>
@@ -218,17 +217,19 @@ const Navbar = () => {
                 <div className="flex-1" />
 
                 {/* CTA Button */}
-                <motion.a
-                  href="#cta"
+                <motion.button
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    openAuth();
+                    setIsOpen(false);
+                  }}
                   className="flex items-center justify-center gap-2 w-full py-4 bg-gradient-to-r from-accent to-primary text-white font-semibold rounded-xl shadow-lg"
                 >
                   Get Started
                   <Sparkles className="w-4 h-4" />
-                </motion.a>
+                </motion.button>
 
                 {/* Footer text */}
                 <p className="text-center text-xs text-muted-foreground mt-4">
