@@ -16,8 +16,9 @@ const Hero = () => {
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover"
           style={{
+            objectPosition: 'center 30%',
             filter: 'none',
             imageRendering: 'crisp-edges',
             WebkitBackfaceVisibility: 'hidden',
@@ -34,7 +35,7 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-12 sm:pb-16">
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-12 sm:pb-16">
         <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
 
           {/* Badge */}

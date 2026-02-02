@@ -45,28 +45,28 @@ const Navbar = () => {
         className="fixed top-0 inset-x-0 z-50"
       >
 
-        <div className="flex justify-center px-4 pt-4">
+        <div className="flex justify-center px-4 pt-3">
           {/* Unified Navbar Container */}
-          <div className="hidden md:flex items-center gap-6 bg-gray-100 rounded-full px-3 py-2 shadow-lg">
+          <div className="hidden md:flex items-center gap-4 bg-gray-100 rounded-full px-2 py-1.5 shadow-lg">
             {/* Logo */}
-            <a href="#" className="flex items-center group pl-2">
+            <a href="#" className="flex items-center group pl-1.5">
               <img
                 src={logo}
                 alt="EventFlow Logo"
-                className="h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                className="h-9 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
               />
             </a>
 
             {/* Divider */}
-            <div className="w-px h-8 bg-gray-300" />
+            <div className="w-px h-6 bg-gray-300" />
 
             {/* Navigation Links */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center">
               {navLinks.map((link) => (
                 <a
                   key={link.id}
                   href={link.href}
-                  className="relative px-4 py-2 text-sm font-medium transition-colors duration-300"
+                  className="relative px-3 py-1.5 text-sm font-medium transition-colors duration-300"
                 >
                   {activeSection === link.id && (
                     <motion.div
@@ -88,34 +88,34 @@ const Navbar = () => {
             </div>
 
             {/* Divider */}
-            <div className="w-px h-8 bg-gray-300" />
+            <div className="w-px h-6 bg-gray-300" />
 
             {/* CTA Button */}
             <button
               onClick={openAuth}
-              className="group relative inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white overflow-hidden rounded-full transition-all duration-300"
+              className="group relative inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-semibold text-white overflow-hidden rounded-full transition-all duration-300"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary rounded-full transition-transform duration-500 group-hover:scale-105" />
               <span className="relative z-10">Get Started</span>
-              <Sparkles className="relative z-10 w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
+              <Sparkles className="relative z-10 w-3.5 h-3.5 group-hover:rotate-12 transition-transform duration-300" />
             </button>
           </div>
 
           {/* Mobile Navbar */}
-          <div className="flex md:hidden items-center justify-between w-full bg-gray-100 rounded-full px-3 py-2 shadow-lg">
+          <div className="flex md:hidden items-center justify-between w-full bg-gray-100 rounded-full px-2 py-1.5 shadow-lg">
             {/* Logo */}
             <a href="#" className="flex items-center pl-1">
               <img
                 src={logo}
                 alt="EventFlow Logo"
-                className="h-12 w-auto object-contain"
+                className="h-8 w-auto object-contain"
               />
             </a>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="relative w-9 h-9 flex items-center justify-center rounded-full bg-white hover:bg-gray-50 transition-colors"
+              className="relative w-8 h-8 flex items-center justify-center rounded-full bg-white hover:bg-gray-50 transition-colors"
               aria-label="Toggle menu"
             >
               <AnimatePresence mode="wait">
@@ -127,7 +127,7 @@ const Navbar = () => {
                     exit={{ rotate: 90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <X size={18} className="text-foreground" />
+                    <X size={16} className="text-foreground" />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -137,7 +137,7 @@ const Navbar = () => {
                     exit={{ rotate: -90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Menu size={18} className="text-foreground" />
+                    <Menu size={16} className="text-foreground" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -178,7 +178,7 @@ const Navbar = () => {
                     <img
                       src={logo}
                       alt="EventFlow Logo"
-                      className="h-14 w-auto object-contain"
+                      className="h-10 w-auto object-contain"
                     />
                   </div>
                   <button

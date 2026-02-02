@@ -5,10 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { mockSignIn } from '@/lib/authUtils';
 import { SignInData } from '@/types';
 import { useToast } from '@/hooks/use-toast';
+import { useAuthModal } from '@/contexts/AuthModalContext';
 
 const SignInForm = () => {
     const navigate = useNavigate();
     const { toast } = useToast();
+    const { closeAuth } = useAuthModal();
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState<SignInData>({
         email: '',
@@ -55,6 +57,7 @@ const SignInForm = () => {
                     ? '/dashboard/student'
                     : '/dashboard/organizer';
 
+                closeAuth();
                 navigate(dashboardPath);
             } else {
                 toast({
