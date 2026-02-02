@@ -1,21 +1,20 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
-import { MeshGradient } from "@paper-design/shaders-react";
+import { BackgroundPlus } from "@/components/ui/background-plus";
 
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Shader Background */}
-      <div className="absolute inset-0">
-        <MeshGradient
-          colors={["#1e3a5f", "#2563eb", "#0ea5e9", "#38bdf8"]}
-          speed={0.15}
-          style={{ width: "100%", height: "100%" }}
-        />
-      </div>
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-accent/10" />
       
-      {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-background/30 backdrop-blur-[2px]" />
+      {/* Plus pattern background */}
+      <BackgroundPlus 
+        className="absolute inset-0"
+        plusColor="#0ea5e9"
+        plusSize={60}
+        fade={true}
+      />
 
       <div className="section-container relative z-10">
         <div className="max-w-4xl mx-auto text-center">
