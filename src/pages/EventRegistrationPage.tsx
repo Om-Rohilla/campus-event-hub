@@ -10,11 +10,16 @@ import {
     Loader2,
     AlertCircle,
     CheckCircle2,
-    Home
+    User,
+    Mail,
+    Phone,
+    CreditCard,
+    Sparkles,
+    Shield,
+    Ticket
 } from 'lucide-react';
 import { getEventById, registerForEvent, findRegistrationByEmail } from '@/lib/mockData';
 import { Event, Registration } from '@/types';
-import logo from '@/assets/logo.svg';
 
 const EventRegistrationPage = () => {
     const { eventId } = useParams<{ eventId: string }>();
@@ -56,8 +61,8 @@ const EventRegistrationPage = () => {
         try {
             const date = new Date(dateStr);
             return date.toLocaleDateString('en-US', {
-                weekday: 'short',
-                month: 'short',
+                weekday: 'long',
+                month: 'long',
                 day: 'numeric',
                 year: 'numeric'
             });
@@ -86,12 +91,14 @@ const EventRegistrationPage = () => {
 
         if (!formData.name.trim()) {
             errors.name = 'Name is required';
+        } else if (formData.name.trim().length < 2) {
+            errors.name = 'Name must be at least 2 characters';
         }
 
         if (!formData.email.trim()) {
             errors.email = 'Email is required';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            errors.email = 'Please enter a valid email';
+            errors.email = 'Please enter a valid email address';
         }
 
         if (formData.phone && !/^\d{10}$/.test(formData.phone.replace(/\D/g, ''))) {
@@ -130,7 +137,6 @@ const EventRegistrationPage = () => {
         setIsSubmitting(false);
 
         if (registration) {
-            // Navigate to confirmation page with registration data
             navigate(`/event/${eventId}/confirmation`, {
                 state: { registration, event }
             });
@@ -149,8 +155,11 @@ const EventRegistrationPage = () => {
     // Loading state
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-gradient-surface flex items-center justify-center">
-                <Loader2 className="w-8 h-8 text-primary animate-spin" />
+            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center">
+                <div className="text-center">
+                    <Loader2 className="w-10 h-10 text-primary animate-spin mx-auto mb-4" />
+                    <p className="text-muted-foreground">Loading event details...</p>
+                </div>
             </div>
         );
     }
@@ -158,22 +167,28 @@ const EventRegistrationPage = () => {
     // Error state
     if (error || !event) {
         return (
-            <div className="min-h-screen bg-gradient-surface flex items-center justify-center p-4">
-                <div className="text-center max-w-sm mx-auto">
-                    <AlertCircle className="w-12 h-12 sm:w-16 sm:h-16 text-destructive mx-auto mb-4" />
-                    <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
+            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center p-4">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center border border-border/50"
+                >
+                    <div className="w-20 h-20 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-6">
+                        <AlertCircle className="w-10 h-10 text-red-500" />
+                    </div>
+                    <h1 className="text-2xl font-bold text-foreground mb-3">
                         {error || 'Event Not Found'}
                     </h1>
-                    <p className="text-muted-foreground mb-6 text-sm sm:text-base">
+                    <p className="text-muted-foreground mb-8">
                         The event you're looking for doesn't exist or has been removed.
                     </p>
                     <button
                         onClick={() => navigate('/')}
-                        className="btn-primary px-6 py-3 rounded-xl w-full sm:w-auto"
+                        className="w-full bg-primary text-white py-3.5 rounded-xl font-semibold hover:bg-primary/90 transition-all"
                     >
-                        Go to Home
+                        Back to Home
                     </button>
-                </div>
+                </motion.div>
             </div>
         );
     }
@@ -181,25 +196,29 @@ const EventRegistrationPage = () => {
     // Already registered state
     if (existingRegistration) {
         return (
-            <div className="min-h-screen bg-gradient-surface flex items-center justify-center p-4">
+            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center p-4">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-md w-full text-center"
+                    className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center border border-border/50"
                 >
-                    <CheckCircle2 className="w-12 h-12 sm:w-16 sm:h-16 text-green-500 mx-auto mb-4" />
-                    <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
+                    <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-6">
+                        <CheckCircle2 className="w-10 h-10 text-green-500" />
+                    </div>
+                    <h1 className="text-2xl font-bold text-foreground mb-3">
                         Already Registered!
                     </h1>
-                    <p className="text-muted-foreground mb-6 text-sm sm:text-base">
-                        You're already registered for this event with {existingRegistration.userEmail}
+                    <p className="text-muted-foreground mb-8">
+                        You're already registered for this event with<br />
+                        <span className="font-medium text-foreground">{existingRegistration.userEmail}</span>
                     </p>
                     <button
                         onClick={() => navigate(`/event/${eventId}/confirmation`, {
                             state: { registration: existingRegistration, event }
                         })}
-                        className="btn-primary px-6 py-3 rounded-xl w-full"
+                        className="w-full bg-primary text-white py-3.5 rounded-xl font-semibold hover:bg-primary/90 transition-all flex items-center justify-center gap-2"
                     >
+                        <Ticket className="w-5 h-5" />
                         View My Ticket
                     </button>
                 </motion.div>
@@ -210,22 +229,28 @@ const EventRegistrationPage = () => {
     // Registration closed state
     if (!event.isRegistrationOpen) {
         return (
-            <div className="min-h-screen bg-gradient-surface flex items-center justify-center p-4">
-                <div className="text-center max-w-sm mx-auto">
-                    <AlertCircle className="w-12 h-12 sm:w-16 sm:h-16 text-orange-500 mx-auto mb-4" />
-                    <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
+            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center p-4">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center border border-border/50"
+                >
+                    <div className="w-20 h-20 rounded-full bg-orange-50 flex items-center justify-center mx-auto mb-6">
+                        <AlertCircle className="w-10 h-10 text-orange-500" />
+                    </div>
+                    <h1 className="text-2xl font-bold text-foreground mb-3">
                         Registration Closed
                     </h1>
-                    <p className="text-muted-foreground mb-6 text-sm sm:text-base">
+                    <p className="text-muted-foreground mb-8">
                         Registration for this event is currently closed.
                     </p>
                     <button
                         onClick={() => navigate('/')}
-                        className="btn-primary px-6 py-3 rounded-xl w-full sm:w-auto"
+                        className="w-full bg-primary text-white py-3.5 rounded-xl font-semibold hover:bg-primary/90 transition-all"
                     >
-                        Go to Home
+                        Back to Home
                     </button>
-                </div>
+                </motion.div>
             </div>
         );
     }
@@ -233,260 +258,327 @@ const EventRegistrationPage = () => {
     // Event full state
     if (event.attendees >= event.capacity) {
         return (
-            <div className="min-h-screen bg-gradient-surface flex items-center justify-center p-4">
-                <div className="text-center max-w-sm mx-auto">
-                    <Users className="w-12 h-12 sm:w-16 sm:h-16 text-orange-500 mx-auto mb-4" />
-                    <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
+            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center p-4">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center border border-border/50"
+                >
+                    <div className="w-20 h-20 rounded-full bg-orange-50 flex items-center justify-center mx-auto mb-6">
+                        <Users className="w-10 h-10 text-orange-500" />
+                    </div>
+                    <h1 className="text-2xl font-bold text-foreground mb-3">
                         Event Full
                     </h1>
-                    <p className="text-muted-foreground mb-6 text-sm sm:text-base">
+                    <p className="text-muted-foreground mb-8">
                         This event has reached maximum capacity.
                     </p>
                     <button
                         onClick={() => navigate('/')}
-                        className="btn-primary px-6 py-3 rounded-xl w-full sm:w-auto"
+                        className="w-full bg-primary text-white py-3.5 rounded-xl font-semibold hover:bg-primary/90 transition-all"
                     >
-                        Go to Home
+                        Back to Home
                     </button>
-                </div>
+                </motion.div>
             </div>
         );
     }
 
     const spotsLeft = event.capacity - event.attendees;
+    const spotsPercentage = ((event.capacity - spotsLeft) / event.capacity) * 100;
 
     return (
-        <div className="min-h-screen bg-gradient-surface overflow-x-hidden overflow-y-auto">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 overflow-x-hidden overflow-y-auto">
             {/* Header */}
-            <header className="bg-white border-b border-border/50 sticky top-0 z-40">
-                <div className="max-w-3xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
+            <header className="bg-white/80 backdrop-blur-lg border-b border-border/50 sticky top-0 z-40">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
                     <div className="flex items-center justify-between">
-                        {/* Left: Back + Logo */}
-                        <div className="flex items-center gap-2 sm:gap-3">
-                            <button
-                                onClick={() => navigate(-1)}
-                                className="p-2 rounded-lg hover:bg-muted transition-colors"
-                                aria-label="Go back"
-                            >
-                                <ArrowLeft className="w-5 h-5 text-foreground" />
-                            </button>
-                            <img
-                                src={logo}
-                                alt="EventFlow"
-                                className="h-7 sm:h-8 w-auto cursor-pointer"
-                                onClick={() => navigate('/')}
-                            />
-                        </div>
-
-                        {/* Right: Home Button */}
                         <button
-                            onClick={() => navigate('/')}
-                            className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors text-sm font-medium text-foreground"
+                            onClick={() => navigate(-1)}
+                            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
                         >
-                            <Home className="w-4 h-4" />
-                            <span className="hidden sm:inline">Home</span>
+                            <ArrowLeft className="w-5 h-5" />
+                            <span className="text-sm font-medium">Back</span>
                         </button>
+                        <div className="flex items-center gap-2">
+                            <Shield className="w-4 h-4 text-green-500" />
+                            <span className="text-xs text-muted-foreground">Secure Registration</span>
+                        </div>
                     </div>
                 </div>
             </header>
 
-            <main className="max-w-3xl mx-auto px-3 sm:px-4 py-4 sm:py-8 pb-8 sm:pb-12">
-                {/* Mobile: Event Info Card (shown first on mobile) */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="lg:hidden bg-white rounded-2xl shadow-lg p-4 sm:p-5 mb-6"
-                >
-                    <div className="flex items-start justify-between gap-3 mb-3">
-                        <span className="inline-block px-2.5 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">
-                            {event.category}
-                        </span>
-                        <span className="text-xs text-green-600 font-medium">
-                            {spotsLeft} spots left
-                        </span>
-                    </div>
-
-                    <h1 className="font-display text-lg sm:text-xl font-bold text-foreground mb-3">
-                        {event.title}
-                    </h1>
-
-                    <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm">
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                            <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
-                            <span className="truncate">{formatDate(event.date)}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                            <Clock className="w-3.5 h-3.5 flex-shrink-0" />
-                            <span className="truncate">{formatTime(event.time)}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-muted-foreground col-span-2">
-                            <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
-                            <span className="truncate">{event.location}</span>
-                        </div>
-                    </div>
-                </motion.div>
-
-                <div className="grid lg:grid-cols-5 gap-6 lg:gap-8">
-                    {/* Event Info - Left Side (Desktop only) */}
+            <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+                <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+                    {/* Left: Event Details Card */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="hidden lg:block lg:col-span-2"
+                        className="order-2 lg:order-1"
                     >
-                        <div className="bg-white rounded-2xl shadow-lg p-5 sticky top-20">
-                            <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-semibold rounded-full mb-4">
-                                {event.category}
-                            </span>
+                        <div className="bg-white rounded-2xl shadow-lg border border-border/50 overflow-hidden h-full">
+                            {/* Event Header with Gradient */}
+                            <div className="bg-gradient-to-br from-primary via-primary to-accent p-6 text-white relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
+                                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
 
-                            <h1 className="font-display text-xl font-bold text-foreground mb-4">
-                                {event.title}
-                            </h1>
-
-                            <div className="space-y-3 text-sm">
-                                <div className="flex items-center gap-3 text-muted-foreground">
-                                    <Calendar className="w-4 h-4 flex-shrink-0" />
-                                    <span>{formatDate(event.date)}</span>
-                                </div>
-                                <div className="flex items-center gap-3 text-muted-foreground">
-                                    <Clock className="w-4 h-4 flex-shrink-0" />
-                                    <span>
-                                        {formatTime(event.time)}
-                                        {event.endTime && ` - ${formatTime(event.endTime)}`}
+                                <div className="relative z-10">
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 backdrop-blur-sm text-xs font-medium rounded-full mb-3">
+                                        <Sparkles className="w-3 h-3" />
+                                        {event.category}
                                     </span>
-                                </div>
-                                <div className="flex items-center gap-3 text-muted-foreground">
-                                    <MapPin className="w-4 h-4 flex-shrink-0" />
-                                    <span>{event.location}</span>
-                                </div>
-                                <div className="flex items-center gap-3 text-muted-foreground">
-                                    <Users className="w-4 h-4 flex-shrink-0" />
-                                    <span>{spotsLeft} spots left</span>
+                                    <h1 className="text-xl sm:text-2xl font-bold mb-1 leading-tight">
+                                        {event.title}
+                                    </h1>
+                                    <p className="text-white/80 text-sm">
+                                        by {event.organizerName}
+                                    </p>
                                 </div>
                             </div>
 
-                            {event.description && (
-                                <div className="mt-4 pt-4 border-t border-border/50">
-                                    <p className="text-sm text-muted-foreground line-clamp-4">
-                                        {event.description}
+                            {/* Event Details */}
+                            <div className="p-6 space-y-4">
+                                {/* Date */}
+                                <div className="flex items-center gap-4">
+                                    <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                        <Calendar className="w-5 h-5 text-primary" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wide">Date</p>
+                                        <p className="font-medium text-foreground text-sm">{formatDate(event.date)}</p>
+                                    </div>
+                                </div>
+
+                                {/* Time */}
+                                <div className="flex items-center gap-4">
+                                    <div className="w-11 h-11 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
+                                        <Clock className="w-5 h-5 text-accent" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wide">Time</p>
+                                        <p className="font-medium text-foreground text-sm">
+                                            {formatTime(event.time)}
+                                            {event.endTime && ` - ${formatTime(event.endTime)}`}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Location */}
+                                <div className="flex items-center gap-4">
+                                    <div className="w-11 h-11 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+                                        <MapPin className="w-5 h-5 text-green-600" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wide">Location</p>
+                                        <p className="font-medium text-foreground text-sm">{event.location}</p>
+                                    </div>
+                                </div>
+
+                                {/* Capacity Bar */}
+                                <div className="pt-4 border-t border-border/50">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <span className="text-xs text-muted-foreground">Availability</span>
+                                        <span className="text-xs font-semibold text-foreground">{spotsLeft} spots left</span>
+                                    </div>
+                                    <div className="h-2 bg-muted rounded-full overflow-hidden">
+                                        <div
+                                            className="h-full bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-500"
+                                            style={{ width: `${spotsPercentage}%` }}
+                                        />
+                                    </div>
+                                    <p className="text-xs text-muted-foreground mt-1.5">
+                                        {event.attendees} of {event.capacity} registered
                                     </p>
                                 </div>
-                            )}
 
-                            <div className="mt-4 pt-4 border-t border-border/50">
-                                <p className="text-xs text-muted-foreground">
-                                    Organized by <span className="font-medium">{event.organizerName}</span>
-                                </p>
+                                {/* Description */}
+                                {event.description && (
+                                    <div className="pt-4 border-t border-border/50">
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1.5">About</p>
+                                        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                                            {event.description}
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </motion.div>
 
-                    {/* Registration Form - Right Side / Full width on mobile */}
+                    {/* Right: Registration Form */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="lg:col-span-3"
+                        className="order-1 lg:order-2"
                     >
-                        <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
-                            <h2 className="font-display text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-6">
-                                Register for Event
-                            </h2>
+                        <div className="bg-white rounded-2xl shadow-lg border border-border/50 overflow-hidden h-full">
+                            {/* Form Header */}
+                            <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 p-6 text-white relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+                                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
 
-                            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-                                {/* Name */}
-                                <div>
-                                    <label className="block text-sm font-medium text-foreground mb-1.5 sm:mb-2">
-                                        Full Name *
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={formData.name}
-                                        onChange={(e) => handleChange('name', e.target.value)}
-                                        placeholder="Enter your full name"
-                                        className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl border text-sm sm:text-base ${formErrors.name ? 'border-destructive' : 'border-border'
-                                            } bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all`}
-                                    />
-                                    {formErrors.name && (
-                                        <p className="text-xs sm:text-sm text-destructive mt-1">{formErrors.name}</p>
-                                    )}
+                                <div className="relative z-10">
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 backdrop-blur-sm text-xs font-medium rounded-full mb-3">
+                                        <Ticket className="w-3 h-3" />
+                                        Free Registration
+                                    </span>
+                                    <h2 className="text-xl sm:text-2xl font-bold mb-1">
+                                        Register Now
+                                    </h2>
+                                    <p className="text-white/70 text-sm">
+                                        Secure your spot for this event
+                                    </p>
                                 </div>
+                            </div>
 
-                                {/* Email */}
-                                <div>
-                                    <label className="block text-sm font-medium text-foreground mb-1.5 sm:mb-2">
-                                        Email Address *
-                                    </label>
-                                    <input
-                                        type="email"
-                                        value={formData.email}
-                                        onChange={(e) => handleChange('email', e.target.value)}
-                                        placeholder="your.email@example.com"
-                                        className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl border text-sm sm:text-base ${formErrors.email ? 'border-destructive' : 'border-border'
-                                            } bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all`}
-                                    />
-                                    {formErrors.email && (
-                                        <p className="text-xs sm:text-sm text-destructive mt-1">{formErrors.email}</p>
-                                    )}
-                                </div>
-
-                                {/* Phone & Student ID Row */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    {/* Phone */}
+                            {/* Form Content */}
+                            <div className="p-6">
+                                <form onSubmit={handleSubmit} className="space-y-4">
+                                    {/* Name */}
                                     <div>
-                                        <label className="block text-sm font-medium text-foreground mb-1.5 sm:mb-2">
-                                            Phone Number
+                                        <label className="block text-sm font-medium text-foreground mb-1.5">
+                                            Full Name <span className="text-red-500">*</span>
                                         </label>
-                                        <input
-                                            type="tel"
-                                            value={formData.phone}
-                                            onChange={(e) => handleChange('phone', e.target.value)}
-                                            placeholder="10-digit number"
-                                            className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl border text-sm sm:text-base ${formErrors.phone ? 'border-destructive' : 'border-border'
-                                                } bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all`}
-                                        />
-                                        {formErrors.phone && (
-                                            <p className="text-xs sm:text-sm text-destructive mt-1">{formErrors.phone}</p>
+                                        <div className="relative">
+                                            <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                                            <input
+                                                type="text"
+                                                value={formData.name}
+                                                onChange={(e) => handleChange('name', e.target.value)}
+                                                placeholder="Enter your full name"
+                                                className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 text-sm transition-all ${
+                                                    formErrors.name
+                                                        ? 'border-red-300 bg-red-50/50 focus:border-red-500 focus:ring-red-200'
+                                                        : 'border-border bg-background focus:border-primary focus:ring-primary/20'
+                                                } focus:outline-none focus:ring-4`}
+                                            />
+                                        </div>
+                                        {formErrors.name && (
+                                            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+                                                <AlertCircle className="w-3 h-3" />
+                                                {formErrors.name}
+                                            </p>
                                         )}
                                     </div>
 
-                                    {/* Student ID */}
+                                    {/* Email */}
                                     <div>
-                                        <label className="block text-sm font-medium text-foreground mb-1.5 sm:mb-2">
-                                            Student ID
+                                        <label className="block text-sm font-medium text-foreground mb-1.5">
+                                            Email Address <span className="text-red-500">*</span>
                                         </label>
-                                        <input
-                                            type="text"
-                                            value={formData.studentId}
-                                            onChange={(e) => handleChange('studentId', e.target.value)}
-                                            placeholder="e.g., IILM2024001"
-                                            className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl border border-border bg-background text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                                        />
+                                        <div className="relative">
+                                            <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                                            <input
+                                                type="email"
+                                                value={formData.email}
+                                                onChange={(e) => handleChange('email', e.target.value)}
+                                                placeholder="your.email@example.com"
+                                                className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 text-sm transition-all ${
+                                                    formErrors.email
+                                                        ? 'border-red-300 bg-red-50/50 focus:border-red-500 focus:ring-red-200'
+                                                        : 'border-border bg-background focus:border-primary focus:ring-primary/20'
+                                                } focus:outline-none focus:ring-4`}
+                                            />
+                                        </div>
+                                        {formErrors.email && (
+                                            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+                                                <AlertCircle className="w-3 h-3" />
+                                                {formErrors.email}
+                                            </p>
+                                        )}
                                     </div>
-                                </div>
 
-                                {/* Submit Button */}
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="w-full btn-primary py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
-                                >
-                                    {isSubmitting ? (
-                                        <>
-                                            <Loader2 className="w-5 h-5 animate-spin" />
-                                            Registering...
-                                        </>
-                                    ) : (
-                                        'Register Now'
-                                    )}
-                                </button>
+                                    {/* Phone & Student ID in row */}
+                                    <div className="grid grid-cols-2 gap-3">
+                                        {/* Phone */}
+                                        <div>
+                                            <label className="block text-sm font-medium text-foreground mb-1.5">
+                                                Phone <span className="text-muted-foreground font-normal text-xs">(Optional)</span>
+                                            </label>
+                                            <div className="relative">
+                                                <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                                                <input
+                                                    type="tel"
+                                                    value={formData.phone}
+                                                    onChange={(e) => handleChange('phone', e.target.value)}
+                                                    placeholder="10-digit"
+                                                    className={`w-full pl-10 pr-3 py-3 rounded-xl border-2 text-sm transition-all ${
+                                                        formErrors.phone
+                                                            ? 'border-red-300 bg-red-50/50 focus:border-red-500 focus:ring-red-200'
+                                                            : 'border-border bg-background focus:border-primary focus:ring-primary/20'
+                                                    } focus:outline-none focus:ring-4`}
+                                                />
+                                            </div>
+                                            {formErrors.phone && (
+                                                <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+                                                    <AlertCircle className="w-3 h-3" />
+                                                    Invalid
+                                                </p>
+                                            )}
+                                        </div>
 
-                                <p className="text-[10px] sm:text-xs text-muted-foreground text-center">
-                                    By registering, you agree to receive updates about this event.
-                                </p>
-                            </form>
+                                        {/* Student ID */}
+                                        <div>
+                                            <label className="block text-sm font-medium text-foreground mb-1.5">
+                                                Student ID <span className="text-muted-foreground font-normal text-xs">(Optional)</span>
+                                            </label>
+                                            <div className="relative">
+                                                <CreditCard className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                                                <input
+                                                    type="text"
+                                                    value={formData.studentId}
+                                                    onChange={(e) => handleChange('studentId', e.target.value)}
+                                                    placeholder="IILM2024001"
+                                                    className="w-full pl-10 pr-3 py-3 rounded-xl border-2 border-border bg-background text-sm focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Submit Button */}
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="w-full bg-gradient-to-r from-primary to-accent text-white py-3.5 rounded-xl font-semibold text-base flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none mt-2"
+                                    >
+                                        {isSubmitting ? (
+                                            <>
+                                                <Loader2 className="w-5 h-5 animate-spin" />
+                                                Registering...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Ticket className="w-5 h-5" />
+                                                Register Now
+                                            </>
+                                        )}
+                                    </button>
+
+                                    {/* Trust indicators */}
+                                    <div className="flex items-center justify-center gap-4 pt-3 border-t border-border/50 mt-4">
+                                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                                            <Shield className="w-3.5 h-3.5 text-green-500" />
+                                            Secure
+                                        </div>
+                                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                                            <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                                            Instant
+                                        </div>
+                                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                                            <Ticket className="w-3.5 h-3.5 text-green-500" />
+                                            Free
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </motion.div>
                 </div>
+
+                {/* Help Text */}
+                <p className="text-center text-xs text-muted-foreground mt-6 px-4">
+                    By registering, you agree to receive updates about this event.
+                </p>
             </main>
         </div>
     );

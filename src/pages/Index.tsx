@@ -12,7 +12,7 @@ import AuthModal from "@/components/auth/AuthModal";
 const Index = () => {
   return (
     <AuthModalProvider>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background overflow-x-hidden overflow-y-auto">
         <Navbar />
         <Hero />
         <ProblemSection />

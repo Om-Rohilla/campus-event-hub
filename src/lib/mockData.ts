@@ -617,5 +617,24 @@ export const findRegistrationByStudentId = (eventId: string, studentId: string):
     return registrations.find(r => r.studentId === studentId) || null;
 };
 
+// Get all registrations for a user by email
+export const getUserRegistrations = (userEmail: string): (Registration & { event: Event | null })[] => {
+    const allEvents = getAllEvents();
+    const userRegistrations: (Registration & { event: Event | null })[] = [];
+
+    allEvents.forEach(event => {
+        const registrations = getEventRegistrations(event.id);
+        const userReg = registrations.find(r => r.userEmail.toLowerCase() === userEmail.toLowerCase());
+        if (userReg) {
+            userRegistrations.push({
+                ...userReg,
+                event: event
+            });
+        }
+    });
+
+    return userRegistrations;
+};
+
 // Legacy export for backward compatibility
 export const mockOrganizerEvents: Event[] = [];
