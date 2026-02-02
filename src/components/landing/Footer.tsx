@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
-    <footer className="py-12 bg-background border-t border-border/50">
+    <footer className="py-12 bg-background">
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0 }}
