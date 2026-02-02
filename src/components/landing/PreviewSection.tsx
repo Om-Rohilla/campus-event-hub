@@ -33,31 +33,31 @@ const sampleEvents = [
 
 const PreviewSection = () => {
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden">
+    <section className="py-16 sm:py-20 lg:py-28 relative overflow-hidden">
       {/* Background elements */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-accent/5 rounded-full blur-3xl" />
       
-      <div className="section-container relative">
+      <div className="section-container px-4 sm:px-6 lg:px-8 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-14 lg:mb-16"
         >
-          <span className="inline-block text-sm font-semibold text-accent uppercase tracking-wider mb-4">
+          <span className="inline-block text-xs sm:text-sm font-semibold text-accent uppercase tracking-wider mb-3 sm:mb-4">
             Preview
           </span>
-          <h2 className="section-title">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-display font-semibold text-foreground leading-tight mb-3 sm:mb-4">
             Upcoming campus events
           </h2>
-          <p className="section-subtitle mx-auto mt-4">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
             See what's happening on campus. All events, one place.
           </p>
         </motion.div>
 
         {/* Events Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {sampleEvents.map((event, index) => (
             <motion.div
               key={event.title}
@@ -69,11 +69,11 @@ const PreviewSection = () => {
             >
               <div className="card-elevated overflow-hidden border border-border/50 h-full">
                 {/* Category banner */}
-                <div className={`h-2 ${event.color}`} />
+                <div className={`h-1.5 sm:h-2 ${event.color}`} />
                 
-                <div className="p-6">
+                <div className="p-4 sm:p-5 lg:p-6">
                   {/* Category badge */}
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 ${
+                  <span className={`inline-block px-2.5 sm:px-3 py-1 rounded-full text-xs font-semibold mb-3 sm:mb-4 ${
                     event.color === "bg-accent" 
                       ? "bg-accent/10 text-accent" 
                       : "bg-primary/10 text-primary"
@@ -82,33 +82,33 @@ const PreviewSection = () => {
                   </span>
                   
                   {/* Title */}
-                  <h3 className="font-display text-xl font-semibold text-foreground mb-4 group-hover:text-primary transition-colors">
+                  <h3 className="font-display text-base sm:text-lg lg:text-xl font-semibold text-foreground mb-3 sm:mb-4 group-hover:text-primary transition-colors line-clamp-2">
                     {event.title}
                   </h3>
 
                   {/* Event details */}
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <Calendar className="w-4 h-4 flex-shrink-0" />
-                      <span className="text-sm">{event.date}</span>
+                  <div className="space-y-2 sm:space-y-3">
+                    <div className="flex items-center gap-2.5 sm:gap-3 text-muted-foreground">
+                      <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                      <span className="text-xs sm:text-sm">{event.date}</span>
                     </div>
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <Clock className="w-4 h-4 flex-shrink-0" />
-                      <span className="text-sm">{event.time}</span>
+                    <div className="flex items-center gap-2.5 sm:gap-3 text-muted-foreground">
+                      <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                      <span className="text-xs sm:text-sm">{event.time}</span>
                     </div>
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <MapPin className="w-4 h-4 flex-shrink-0" />
-                      <span className="text-sm">{event.location}</span>
+                    <div className="flex items-center gap-2.5 sm:gap-3 text-muted-foreground">
+                      <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                      <span className="text-xs sm:text-sm">{event.location}</span>
                     </div>
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <Users className="w-4 h-4 flex-shrink-0" />
-                      <span className="text-sm">{event.attendees} registered</span>
+                    <div className="flex items-center gap-2.5 sm:gap-3 text-muted-foreground">
+                      <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                      <span className="text-xs sm:text-sm">{event.attendees} registered</span>
                     </div>
                   </div>
 
                   {/* Register button */}
-                  <div className="mt-6 pt-4 border-t border-border/50">
-                    <button className="w-full py-2.5 rounded-lg bg-primary/10 text-primary font-medium text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+                  <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-border/50">
+                    <button className="w-full py-2 sm:py-2.5 rounded-lg bg-primary/10 text-primary font-medium text-xs sm:text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300">
                       View Details
                     </button>
                   </div>
@@ -124,7 +124,7 @@ const PreviewSection = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center text-muted-foreground mt-12"
+          className="text-center text-xs sm:text-sm text-muted-foreground mt-8 sm:mt-12"
         >
           These are sample events. Your campus events will appear here once you get started.
         </motion.p>
