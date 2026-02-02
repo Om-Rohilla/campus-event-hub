@@ -10,48 +10,46 @@ const Navbar = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[95vw]"
     >
-      <div className="bg-card/90 backdrop-blur-xl rounded-full px-4 lg:px-6 shadow-lg border border-border/50">
-        <div className="flex items-center justify-center gap-6 lg:gap-8 h-14 lg:h-16">
+      <div className="bg-white/95 backdrop-blur-xl rounded-full px-6 py-2 shadow-lg border border-border/30">
+        <div className="flex items-center gap-8">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-hero flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">E</span>
+          <a href="#" className="flex items-center gap-2 shrink-0">
+            <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-base">E</span>
             </div>
             <span className="font-display text-xl font-semibold text-foreground">
               EventFlow
             </span>
           </a>
 
-          {/* Desktop Navigation - Center */}
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             <a
               href="#problem"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
             >
               Why EventFlow
             </a>
             <a
               href="#solution"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
             >
               How It Works
             </a>
             <a
               href="#audience"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
             >
               For You
             </a>
           </div>
 
           {/* CTA Button */}
-          <div className="hidden md:flex items-center gap-4">
-            <a href="#cta" className="btn-primary text-sm rounded-full px-5 py-2">
-              Get Started
-            </a>
-          </div>
+          <a href="#cta" className="hidden md:inline-flex btn-primary text-sm rounded-full px-5 py-2.5 shrink-0">
+            Get Started
+          </a>
 
           {/* Mobile Menu Button */}
           <button
@@ -69,26 +67,26 @@ const Navbar = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="md:hidden absolute top-full left-0 right-0 mt-2 bg-card/95 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-border/50"
+          className="md:hidden absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-border/30"
         >
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2">
             <a
               href="#problem"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/50"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-4 py-3 rounded-lg hover:bg-muted/50"
               onClick={() => setIsOpen(false)}
             >
               Why EventFlow
             </a>
             <a
               href="#solution"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/50"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-4 py-3 rounded-lg hover:bg-muted/50"
               onClick={() => setIsOpen(false)}
             >
               How It Works
             </a>
             <a
               href="#audience"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/50"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-4 py-3 rounded-lg hover:bg-muted/50"
               onClick={() => setIsOpen(false)}
             >
               For You
