@@ -1,26 +1,21 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
+import { MeshGradient } from "@paper-design/shaders-react";
 
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-surface" />
+      {/* Shader Background */}
+      <div className="absolute inset-0">
+        <MeshGradient
+          colors={["#1e3a5f", "#2563eb", "#0ea5e9", "#38bdf8"]}
+          speed={0.15}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
       
-      {/* Decorative shapes */}
-      <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/3 rounded-full blur-3xl" />
-      
-      {/* Grid pattern overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.015]"
-        style={{
-          backgroundImage: `linear-gradient(hsl(var(--primary)) 1px, transparent 1px),
-                           linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px'
-        }}
-      />
+      {/* Overlay for better text readability */}
+      <div className="absolute inset-0 bg-background/30 backdrop-blur-[2px]" />
 
       <div className="section-container relative z-10">
         <div className="max-w-4xl mx-auto text-center">
