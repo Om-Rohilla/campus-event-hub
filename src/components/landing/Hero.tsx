@@ -4,7 +4,7 @@ import campusVideo from "@/assets/campus-life.mp4";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background to-muted/30">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
       {/* Video Container - Contained Size */}
       <div className="absolute inset-2 sm:inset-4 md:inset-6 lg:inset-8 xl:inset-10 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
         <video

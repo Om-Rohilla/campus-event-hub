@@ -3,21 +3,18 @@ import { FileText, QrCode, CheckCircle } from "lucide-react";
 
 const steps = [
   {
-    number: "01",
     icon: FileText,
     title: "Create Your Event",
     description:
       "Fill out one simple form. Add event details, timing, venue, and capacity. Done in minutes.",
   },
   {
-    number: "02",
     icon: QrCode,
     title: "Share & Register",
     description:
       "Platform auto-generates registration link and unique QR codes. Students register in seconds.",
   },
   {
-    number: "03",
     icon: CheckCircle,
     title: "Scan & Track",
     description:
@@ -52,45 +49,30 @@ const SolutionSection = () => {
           </p>
         </motion.div>
 
-        <div className="relative">
-          {/* Connection line - desktop only */}
-          <div className="hidden lg:block absolute top-20 left-[20%] right-[20%] h-0.5 bg-gradient-to-r from-primary/20 via-accent/40 to-primary/20" />
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-            {steps.map((step, index) => (
-              <motion.div
-                key={step.number}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                className="relative"
-              >
-                {/* Step indicator */}
-                <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                  <div className="relative">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-hero flex items-center justify-center text-primary-foreground font-display font-bold text-base sm:text-lg z-10 relative">
-                      {step.number}
-                    </div>
-                    <div className="absolute inset-0 rounded-full bg-primary/20 blur-lg" />
-                  </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+          {steps.map((step, index) => (
+            <motion.div
+              key={step.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.15 }}
+              className="relative"
+            >
+              {/* Content card */}
+              <div className="card-elevated p-5 sm:p-6 border border-border/50">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-3 sm:mb-4">
+                  <step.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                 </div>
-
-                {/* Content card */}
-                <div className="card-elevated p-5 sm:p-6 border border-border/50">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-3 sm:mb-4">
-                    <step.icon className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
-                  </div>
-                  <h3 className="font-display text-lg sm:text-xl font-semibold text-foreground mb-2 sm:mb-3">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                <h3 className="font-display text-lg sm:text-xl font-semibold text-foreground mb-2 sm:mb-3">
+                  {step.title}
+                </h3>
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

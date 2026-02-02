@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
-import iilmLogo from "@/assets/iilm-logo.webp";
+import logo from "@/assets/logo.svg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,9 +49,9 @@ const Navbar = () => {
             {/* Logo */}
             <a href="#" className="flex items-center group pl-2">
               <img
-                src={iilmLogo}
-                alt="IILM University"
-                className="h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                src={logo}
+                alt="EventFlow Logo"
+                className="h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
               />
             </a>
 
@@ -105,9 +105,9 @@ const Navbar = () => {
             {/* Logo */}
             <a href="#" className="flex items-center pl-1">
               <img
-                src={iilmLogo}
-                alt="IILM University"
-                className="h-8 w-auto object-contain"
+                src={logo}
+                alt="EventFlow Logo"
+                className="h-12 w-auto object-contain"
               />
             </a>
 
@@ -175,9 +175,9 @@ const Navbar = () => {
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center">
                     <img
-                      src={iilmLogo}
-                      alt="IILM University"
-                      className="h-10 w-auto object-contain"
+                      src={logo}
+                      alt="EventFlow Logo"
+                      className="h-14 w-auto object-contain"
                     />
                   </div>
                   <button
