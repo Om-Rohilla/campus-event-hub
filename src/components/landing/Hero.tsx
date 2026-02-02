@@ -8,8 +8,8 @@ const Hero = () => {
       {/* Shader Background */}
       <div className="absolute inset-0">
         <MeshGradient
-          colors={["#1e3a5f", "#2563eb", "#0ea5e9", "#38bdf8"]}
-          speed={0.15}
+          colors={["#000080", "#1a1a80", "#400020", "#800000"]}
+          speed={0.12}
           style={{ width: "100%", height: "100%" }}
         />
       </div>
