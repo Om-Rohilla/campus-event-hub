@@ -5,16 +5,15 @@ import collegeBuilding from "@/assets/college-building.png";
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* College Building Background - Full coverage */}
+      {/* College Building Background - Crystal Clear */}
       <div className="absolute inset-0 w-full h-full">
         <img 
           src={collegeBuilding} 
           alt="College Campus" 
-          className="w-full h-full object-cover object-center scale-105"
-          style={{ imageRendering: 'auto' }}
+          className="w-full h-full object-cover object-center"
         />
-        {/* Elegant gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" />
+        {/* Very light overlay - just enough for text readability */}
+        <div className="absolute inset-0 bg-black/35" />
       </div>
 
       {/* Content */}
@@ -26,10 +25,10 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/15 border border-white/25 backdrop-blur-md mb-10"
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/90 shadow-lg mb-10"
           >
             <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse" />
-            <span className="text-sm font-medium text-white tracking-wide">
+            <span className="text-sm font-medium text-foreground tracking-wide">
               Now live at IILM campuses
             </span>
           </motion.div>
@@ -76,7 +75,7 @@ const Hero = () => {
             </a>
             <a 
               href="#solution" 
-              className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 text-base font-semibold rounded-full bg-white/20 text-white border border-white/30 backdrop-blur-sm hover:bg-white/30 transition-all duration-300"
+              className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 text-base font-semibold rounded-full bg-white/90 text-foreground shadow-lg hover:bg-white transition-all duration-300"
             >
               <Play className="w-5 h-5" />
               How It Works
