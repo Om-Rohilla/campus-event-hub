@@ -89,6 +89,11 @@ const StudentDashboard = () => {
         navigate('/');
     };
 
+    const openTab = (tab: TabType) => {
+        setSelectedQR(null);
+        setActiveTab(tab);
+    };
+
     const formatDate = (dateStr: string) => {
         try {
             const date = new Date(dateStr);
@@ -114,6 +119,14 @@ const StudentDashboard = () => {
             });
         } catch {
             return timeStr;
+        }
+    };
+
+    const decodeQR = (encoded: string) => {
+        try {
+            return atob(encoded);
+        } catch {
+            return encoded;
         }
     };
 
@@ -208,7 +221,7 @@ const StudentDashboard = () => {
                                     <CalendarCheck className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
                                     <p className="text-muted-foreground mb-4">No registered events yet</p>
                                     <button
-                                        onClick={() => setActiveTab('explore')}
+                                        onClick={() => openTab('explore')}
                                         className="btn-primary px-4 py-2 rounded-lg text-sm"
                                     >
                                         Explore Events
@@ -222,28 +235,28 @@ const StudentDashboard = () => {
                             <h2 className="text-lg font-semibold text-foreground mb-4">Quick Actions</h2>
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                                 <button
-                                    onClick={() => setActiveTab('explore')}
+                                    onClick={() => openTab('explore')}
                                     className="bg-white rounded-xl p-4 border border-border/50 shadow-sm hover:shadow-md transition-shadow text-center"
                                 >
                                     <Compass className="w-6 h-6 text-primary mx-auto mb-2" />
                                     <p className="text-sm font-medium text-foreground">Find Events</p>
                                 </button>
                                 <button
-                                    onClick={() => setActiveTab('registrations')}
+                                    onClick={() => openTab('registrations')}
                                     className="bg-white rounded-xl p-4 border border-border/50 shadow-sm hover:shadow-md transition-shadow text-center"
                                 >
                                     <CalendarCheck className="w-6 h-6 text-green-600 mx-auto mb-2" />
                                     <p className="text-sm font-medium text-foreground">My Events</p>
                                 </button>
                                 <button
-                                    onClick={() => setActiveTab('qr-passes')}
+                                    onClick={() => openTab('qr-passes')}
                                     className="bg-white rounded-xl p-4 border border-border/50 shadow-sm hover:shadow-md transition-shadow text-center"
                                 >
                                     <QrCode className="w-6 h-6 text-accent mx-auto mb-2" />
                                     <p className="text-sm font-medium text-foreground">QR Passes</p>
                                 </button>
                                 <button
-                                    onClick={() => setActiveTab('profile')}
+                                    onClick={() => openTab('profile')}
                                     className="bg-white rounded-xl p-4 border border-border/50 shadow-sm hover:shadow-md transition-shadow text-center"
                                 >
                                     <User className="w-6 h-6 text-orange-600 mx-auto mb-2" />
@@ -388,7 +401,7 @@ const StudentDashboard = () => {
                                 description="Register for events to see them here"
                                 icon="calendar"
                                 actionLabel="Explore Events"
-                                onAction={() => setActiveTab('explore')}
+                                onAction={() => openTab('explore')}
                             />
                         )}
                     </div>
@@ -398,8 +411,22 @@ const StudentDashboard = () => {
                 return (
                     <div>
                         {userRegistrations.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {userRegistrations.map((reg) => reg.event && (
+                            <div className="space-y-4">
+                                {selectedQR && (
+                                    <div className="flex items-center justify-between">
+                                        <p className="text-sm text-muted-foreground">
+                                            Showing 1 QR pass
+                                        </p>
+                                        <button
+                                            onClick={() => setSelectedQR(null)}
+                                            className="px-3 py-2 rounded-lg bg-muted text-foreground text-sm font-medium hover:bg-muted/80 transition-colors"
+                                        >
+                                            View all
+                                        </button>
+                                    </div>
+                                )}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {(selectedQR ? [selectedQR] : userRegistrations).map((reg) => reg.event && (
                                     <motion.div
                                         key={reg.id}
                                         initial={{ opacity: 0, scale: 0.95 }}
@@ -418,7 +445,7 @@ const StudentDashboard = () => {
                                         {/* QR Code */}
                                         <div className="p-6 flex flex-col items-center">
                                             <QRCodeDisplay
-                                                data={atob(reg.qrCode)}
+                                                data={decodeQR(reg.qrCode)}
                                                 title=""
                                                 size={180}
                                                 showActions={true}
@@ -435,15 +462,16 @@ const StudentDashboard = () => {
                                             </p>
                                         </div>
                                     </motion.div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
                         ) : (
                             <EmptyState
                                 title="No QR Passes"
                                 description="Register for events to get your QR passes"
-                                icon="qr"
+                                icon="inbox"
                                 actionLabel="Explore Events"
-                                onAction={() => setActiveTab('explore')}
+                                onAction={() => openTab('explore')}
                             />
                         )}
                     </div>
@@ -472,10 +500,10 @@ const StudentDashboard = () => {
                                     <label className="text-xs text-muted-foreground uppercase tracking-wide">Email</label>
                                     <p className="text-foreground font-medium">{user.email}</p>
                                 </div>
-                                {user.studentId && (
+                                {user.collegeId && (
                                     <div>
-                                        <label className="text-xs text-muted-foreground uppercase tracking-wide">Student ID</label>
-                                        <p className="text-foreground font-medium">{user.studentId}</p>
+                                        <label className="text-xs text-muted-foreground uppercase tracking-wide">College ID</label>
+                                        <p className="text-foreground font-medium">{user.collegeId}</p>
                                     </div>
                                 )}
                                 <div>
@@ -557,7 +585,7 @@ const StudentDashboard = () => {
                         {menuItems.map((item) => (
                             <button
                                 key={item.id}
-                                onClick={() => setActiveTab(item.id)}
+                                onClick={() => openTab(item.id)}
                                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                                     activeTab === item.id
                                         ? 'bg-primary/10 text-primary'
@@ -617,7 +645,7 @@ const StudentDashboard = () => {
                                         <button
                                             key={item.id}
                                             onClick={() => {
-                                                setActiveTab(item.id);
+                                                openTab(item.id);
                                                 setSidebarOpen(false);
                                             }}
                                             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${

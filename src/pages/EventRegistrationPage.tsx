@@ -309,12 +309,12 @@ const EventRegistrationPage = () => {
             </header>
 
             <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
-                <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+                <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
                     {/* Left: Event Details Card */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="order-2 lg:order-1"
+                        className="order-2 lg:order-1 h-full"
                     >
                         <div className="bg-white rounded-2xl shadow-lg border border-border/50 overflow-hidden h-full">
                             {/* Event Header with Gradient */}
@@ -409,7 +409,7 @@ const EventRegistrationPage = () => {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="order-1 lg:order-2"
+                        className="order-1 lg:order-2 h-full"
                     >
                         <div className="bg-white rounded-2xl shadow-lg border border-border/50 overflow-hidden h-full">
                             {/* Form Header */}

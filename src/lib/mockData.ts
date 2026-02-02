@@ -542,16 +542,25 @@ export const getRegistrationById = (registrationId: string): Registration | null
 // Parse QR code data
 export const parseQRCode = (qrData: string): { eventId: string; registrationId?: string } | null => {
     try {
-        const decoded = atob(qrData);
+        let decoded = qrData;
+
+        try {
+            decoded = atob(qrData);
+        } catch {
+            decoded = qrData;
+        }
+
         // Format: eventflow://event/{eventId}/registration/{registrationId}
         // or: eventflow://event/{eventId}
-        const match = decoded.match(/eventflow:\/\/event\/([^\/]+)(?:\/registration\/([^\/]+))?/);
+        const pattern = /eventflow:\/\/event\/([^\/]+)(?:\/registration\/([^\/]+))?/;
+        const match = decoded.match(pattern) || qrData.match(pattern);
         if (match) {
             return {
                 eventId: match[1],
                 registrationId: match[2],
             };
         }
+
         return null;
     } catch {
         return null;
