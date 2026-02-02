@@ -11,10 +11,10 @@ const Hero = () => {
       {/* Plus pattern background */}
       <BackgroundPlus 
         className="absolute inset-0"
-        plusColor="#e8d5d5"
-        plusSize={28}
+        plusColor="#9a9a9a"
+        plusSize={48}
         fade={true}
-        style={{ opacity: 0.8 }}
+        style={{ opacity: 0.6 }}
       />
       
       {/* Subtle accent glows */}
