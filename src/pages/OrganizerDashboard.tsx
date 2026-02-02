@@ -187,7 +187,7 @@ const OrganizerDashboard = () => {
     if (!user) return null;
 
     return (
-        <div className="min-h-screen bg-gradient-surface">
+        <div className="min-h-screen bg-gradient-surface overflow-x-hidden overflow-y-auto">
             {/* Header */}
             <header className="bg-card border-b border-border/50 sticky top-0 z-40 backdrop-blur-xl bg-card/95">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

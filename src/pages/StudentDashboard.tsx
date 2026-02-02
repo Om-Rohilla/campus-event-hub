@@ -60,36 +60,36 @@ const StudentDashboard = () => {
     if (!user) return null;
 
     return (
-        <div className="min-h-screen bg-gradient-surface">
+        <div className="min-h-screen bg-gradient-surface overflow-x-hidden overflow-y-auto">
             {/* Header */}
             <header className="bg-card border-b border-border/50 sticky top-0 z-40 backdrop-blur-xl bg-card/95">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
                     <div className="flex items-center justify-between">
                         {/* Logo - Clickable to go home */}
                         <button
                             onClick={handleLogout}
                             className="flex items-center gap-3 hover:opacity-80 transition-opacity"
                         >
-                            <img src={logo} alt="EventFlow" className="h-10 w-auto" />
+                            <img src={logo} alt="EventFlow" className="h-8 sm:h-10 w-auto" />
                         </button>
 
                         {/* Actions */}
-                        <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="flex items-center gap-1 sm:gap-3">
                             <button
                                 onClick={handleLogout}
-                                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+                                className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
                                 title="Go to Home"
                             >
-                                <Home className="w-5 h-5" />
+                                <Home className="w-4 h-4 sm:w-5 sm:h-5" />
                                 <span className="hidden sm:inline text-sm font-medium">Home</span>
                             </button>
                             <button className="p-2 rounded-lg hover:bg-muted transition-colors relative">
-                                <Bell className="w-5 h-5 text-muted-foreground" />
+                                <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
                                 <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full" />
                             </button>
                             <button
                                 onClick={handleLogout}
-                                className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+                                className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
                             >
                                 <LogOut className="w-4 h-4" />
                                 <span className="hidden sm:inline text-sm font-medium">Logout</span>
@@ -100,18 +100,18 @@ const StudentDashboard = () => {
             </header>
 
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 pb-8">
                 {/* Welcome Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="mb-8"
+                    className="mb-4 sm:mb-8"
                 >
-                    <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-2">
+                    <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-1 sm:mb-2">
                         Welcome back, {user.name.split(' ')[0]}! 👋
                     </h1>
-                    <p className="text-muted-foreground text-lg">
+                    <p className="text-muted-foreground text-sm sm:text-lg">
                         Discover and register for upcoming campus events
                     </p>
                 </motion.div>
@@ -121,23 +121,23 @@ const StudentDashboard = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="mb-8"
+                    className="mb-4 sm:mb-8"
                 >
-                    <div className="flex flex-col sm:flex-row gap-3">
-                        <div className="relative flex-1 max-w-xl">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                        <div className="relative flex-1 sm:max-w-xl">
+                            <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
                             <input
                                 type="text"
-                                placeholder="Search events by name, location, or organizer..."
+                                placeholder="Search events..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-12 pr-4 py-3 rounded-xl border border-border bg-card text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-all"
+                                className="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 rounded-xl border border-border bg-card text-foreground text-sm sm:text-base focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-all"
                             />
                         </div>
                         <select
                             value={categoryFilter}
                             onChange={(e) => setCategoryFilter(e.target.value)}
-                            className="px-4 py-3 rounded-xl border border-border bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer"
+                            className="px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-card text-foreground text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer"
                         >
                             <option value="all">All Categories</option>
                             <option value="Technology">Technology</option>
@@ -158,14 +158,14 @@ const StudentDashboard = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="mb-6"
+                        className="mb-4 sm:mb-6"
                     >
                         <div className="flex items-center justify-between">
                             <div>
-                                <h2 className="font-display text-2xl font-semibold text-foreground mb-1">
+                                <h2 className="font-display text-lg sm:text-2xl font-semibold text-foreground mb-0.5 sm:mb-1">
                                     {searchQuery || categoryFilter !== 'all' ? 'Search Results' : 'Upcoming Events'}
                                 </h2>
-                                <p className="text-muted-foreground text-sm">
+                                <p className="text-muted-foreground text-xs sm:text-sm">
                                     {filteredEvents.length} {filteredEvents.length === 1 ? 'event' : 'events'} found
                                 </p>
                             </div>
@@ -174,7 +174,7 @@ const StudentDashboard = () => {
 
                     {/* Events Grid */}
                     {filteredEvents.length > 0 ? (
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                             {filteredEvents.map((event, index) => (
                                 <EventCard key={event.id} event={event} index={index} />
                             ))}

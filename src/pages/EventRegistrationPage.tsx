@@ -256,10 +256,10 @@ const EventRegistrationPage = () => {
     const spotsLeft = event.capacity - event.attendees;
 
     return (
-        <div className="min-h-screen bg-gradient-surface">
+        <div className="min-h-screen bg-gradient-surface overflow-x-hidden overflow-y-auto">
             {/* Header */}
             <header className="bg-white border-b border-border/50 sticky top-0 z-40">
-                <div className="max-w-3xl mx-auto px-4 py-3">
+                <div className="max-w-3xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
                     <div className="flex items-center justify-between">
                         {/* Left: Back + Logo */}
                         <div className="flex items-center gap-2 sm:gap-3">
@@ -290,7 +290,7 @@ const EventRegistrationPage = () => {
                 </div>
             </header>
 
-            <main className="max-w-3xl mx-auto px-4 py-6 sm:py-8">
+            <main className="max-w-3xl mx-auto px-3 sm:px-4 py-4 sm:py-8 pb-8 sm:pb-12">
                 {/* Mobile: Event Info Card (shown first on mobile) */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

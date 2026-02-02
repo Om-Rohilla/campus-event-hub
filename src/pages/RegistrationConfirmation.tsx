@@ -14,7 +14,6 @@ import {
 import { Event, Registration } from '@/types';
 import { getEventById } from '@/lib/mockData';
 import QRCodeDisplay from '@/components/shared/QRCodeDisplay';
-import logo from '@/assets/logo.svg';
 
 const RegistrationConfirmation = () => {
     const { eventId } = useParams<{ eventId: string }>();
@@ -132,27 +131,19 @@ const RegistrationConfirmation = () => {
     const decodedQR = atob(qrData);
 
     return (
-        <div className="min-h-screen bg-gradient-surface">
+        <div className="min-h-screen bg-gradient-surface overflow-x-hidden overflow-y-auto">
             {/* Header */}
             <header className="bg-white border-b border-border/50 sticky top-0 z-40">
-                <div className="max-w-xl mx-auto px-4 py-3">
+                <div className="max-w-xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
                     <div className="flex items-center justify-between">
-                        {/* Left: Back + Logo */}
-                        <div className="flex items-center gap-2 sm:gap-3">
-                            <button
-                                onClick={() => navigate(-1)}
-                                className="p-2 rounded-lg hover:bg-muted transition-colors"
-                                aria-label="Go back"
-                            >
-                                <ArrowLeft className="w-5 h-5 text-foreground" />
-                            </button>
-                            <img
-                                src={logo}
-                                alt="EventFlow"
-                                className="h-7 sm:h-8 w-auto cursor-pointer"
-                                onClick={() => navigate('/')}
-                            />
-                        </div>
+                        {/* Left: Back Button */}
+                        <button
+                            onClick={() => navigate(-1)}
+                            className="p-2 rounded-lg hover:bg-muted transition-colors"
+                            aria-label="Go back"
+                        >
+                            <ArrowLeft className="w-5 h-5 text-foreground" />
+                        </button>
 
                         {/* Right: Home Button */}
                         <button
@@ -166,7 +157,7 @@ const RegistrationConfirmation = () => {
                 </div>
             </header>
 
-            <main className="max-w-xl mx-auto px-4 py-6 sm:py-8">
+            <main className="max-w-xl mx-auto px-3 sm:px-4 py-4 sm:py-8 pb-8 sm:pb-12">
                 {/* Success Message */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
