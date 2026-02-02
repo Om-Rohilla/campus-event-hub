@@ -10,10 +10,10 @@ const Navbar = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
-      className="fixed top-3 sm:top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] sm:w-auto max-w-[95vw]"
+      className="fixed top-3 sm:top-4 inset-x-0 z-50 flex justify-center px-4"
     >
       <div className="bg-white/95 backdrop-blur-xl rounded-full px-4 sm:px-6 py-2 shadow-lg border border-border/30">
-        <div className="flex items-center justify-between sm:justify-center gap-4 sm:gap-8">
+        <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2 shrink-0">
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-primary flex items-center justify-center">
