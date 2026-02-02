@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
-import campusVideo from "@/assets/WhatsApp Video 2026-02-02 at 11.42.43 AM (1).mp4";
+import campusVideo from "@/assets/campus-life.mp4";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Video Background - High Quality */}
-      <div className="absolute inset-0 w-full h-full">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background to-muted/30">
+      {/* Video Container - Contained Size */}
+      <div className="absolute inset-2 sm:inset-4 md:inset-6 lg:inset-8 xl:inset-10 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
         <video
           autoPlay
           loop
@@ -27,7 +27,7 @@ const Hero = () => {
           Your browser does not support the video tag.
         </video>
         {/* Overlay for text readability */}
-        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
       {/* Content */}
