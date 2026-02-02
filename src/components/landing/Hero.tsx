@@ -12,8 +12,8 @@ const Hero = () => {
           alt="College Campus" 
           className="w-full h-full object-cover"
         />
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-primary/70" />
+        {/* Subtle gradient overlay for text readability - bottom focused */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/20" />
       </div>
 
       <div className="section-container relative z-10">
