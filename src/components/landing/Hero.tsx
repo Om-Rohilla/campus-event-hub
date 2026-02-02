@@ -1,25 +1,39 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
-import collegeBuilding from "@/assets/college-building.png";
+import campusVideo from "@/assets/WhatsApp Video 2026-02-02 at 11.42.43 AM (1).mp4";
 
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* College Building Background - Crystal Clear */}
+      {/* Video Background - High Quality */}
       <div className="absolute inset-0 w-full h-full">
-        <img 
-          src={collegeBuilding} 
-          alt="College Campus" 
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
           className="w-full h-full object-cover object-center"
-        />
-        {/* Light overlay for text readability */}
-        <div className="absolute inset-0 bg-black/40" />
+          style={{
+            filter: 'none',
+            imageRendering: 'crisp-edges',
+            WebkitBackfaceVisibility: 'hidden',
+            backfaceVisibility: 'hidden',
+            transform: 'translateZ(0)',
+            willChange: 'transform'
+          }}
+        >
+          <source src={campusVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        {/* Overlay for text readability */}
+        <div className="absolute inset-0 bg-black/30" />
       </div>
 
       {/* Content */}
       <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-12 sm:pb-16">
         <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
-          
+
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -65,15 +79,15 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0"
           >
-            <a 
-              href="#cta" 
+            <a
+              href="#cta"
               className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold rounded-full bg-accent text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
               Get Started
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
             </a>
-            <a 
-              href="#solution" 
+            <a
+              href="#solution"
               className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold rounded-full bg-white/90 text-foreground shadow-lg hover:bg-white transition-all duration-300"
             >
               <Play className="w-4 h-4 sm:w-5 sm:h-5" />
