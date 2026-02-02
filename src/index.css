@@ -27,9 +27,9 @@
     --secondary: 0 100% 25%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Accent - Gold/Yellow */
-    --accent: 43 90% 50%;
-    --accent-foreground: 240 100% 15%;
+    /* Accent - Maroon/Red for CTAs */
+    --accent: 0 85% 35%;
+    --accent-foreground: 0 0% 100%;
 
     /* Muted Surfaces */
     --muted: 220 15% 94%;
@@ -47,9 +47,9 @@
     --radius: 0.75rem;
 
     /* Custom tokens - Navy to Maroon gradient */
-    --gradient-hero: linear-gradient(135deg, hsl(240 100% 20%) 0%, hsl(240 100% 30%) 50%, hsl(0 100% 25%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(43 90% 50%) 0%, hsl(38 95% 45%) 100%);
-    --gradient-surface: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 15% 96%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(240 100% 20%) 0%, hsl(240 80% 25%) 50%, hsl(0 85% 30%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(0 85% 35%) 0%, hsl(0 70% 28%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 15% 97%) 100%);
     --shadow-card: 0 4px 24px -4px hsl(240 100% 15% / 0.08);
     --shadow-card-hover: 0 12px 32px -8px hsl(240 100% 15% / 0.15);
     --shadow-elevated: 0 20px 48px -12px hsl(240 100% 15% / 0.2);
@@ -152,12 +152,12 @@
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold rounded-lg transition-all duration-300;
     @apply bg-accent text-accent-foreground;
-    box-shadow: 0 4px 14px -4px hsl(43 90% 50% / 0.4);
+    box-shadow: 0 4px 14px -4px hsl(0 85% 35% / 0.4);
   }
 
   .btn-primary:hover {
     @apply scale-[1.02];
-    box-shadow: 0 6px 20px -4px hsl(43 90% 50% / 0.5);
+    box-shadow: 0 6px 20px -4px hsl(0 85% 35% / 0.5);
   }
 
   .btn-secondary {

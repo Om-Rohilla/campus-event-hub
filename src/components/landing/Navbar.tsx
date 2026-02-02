@@ -10,10 +10,10 @@ const Navbar = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50"
     >
-      <div className="bg-card/90 backdrop-blur-xl rounded-full px-6 lg:px-8 shadow-lg border border-border/50">
-        <div className="flex items-center justify-between h-14 lg:h-16">
+      <div className="bg-card/90 backdrop-blur-xl rounded-full px-4 lg:px-6 shadow-lg border border-border/50">
+        <div className="flex items-center justify-center gap-6 lg:gap-8 h-14 lg:h-16">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-hero flex items-center justify-center">
@@ -24,8 +24,8 @@ const Navbar = () => {
             </span>
           </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Navigation - Center */}
+          <div className="hidden md:flex items-center gap-6">
             <a
               href="#problem"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
