@@ -9,11 +9,11 @@ const Navbar = () => {
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg"
+      transition={{ duration: 0.5, delay: 0.2 }}
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl"
     >
-      <div className="section-container">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+      <div className="bg-card/90 backdrop-blur-xl rounded-full px-6 lg:px-8 shadow-lg border border-border/50">
+        <div className="flex items-center justify-between h-14 lg:h-16">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-hero flex items-center justify-center">
@@ -48,7 +48,7 @@ const Navbar = () => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-4">
-            <a href="#cta" className="btn-primary text-sm">
+            <a href="#cta" className="btn-primary text-sm rounded-full px-5 py-2">
               Get Started
             </a>
           </div>
@@ -61,44 +61,44 @@ const Navbar = () => {
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-
-        {/* Mobile Menu */}
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden py-4 border-t border-border/50"
-          >
-            <div className="flex flex-col gap-4">
-              <a
-                href="#problem"
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Why EventFlow
-              </a>
-              <a
-                href="#solution"
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                How It Works
-              </a>
-              <a
-                href="#audience"
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                For You
-              </a>
-              <a href="#cta" className="btn-primary text-sm w-fit" onClick={() => setIsOpen(false)}>
-                Get Started
-              </a>
-            </div>
-          </motion.div>
-        )}
       </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="md:hidden absolute top-full left-0 right-0 mt-2 bg-card/95 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-border/50"
+        >
+          <div className="flex flex-col gap-3">
+            <a
+              href="#problem"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/50"
+              onClick={() => setIsOpen(false)}
+            >
+              Why EventFlow
+            </a>
+            <a
+              href="#solution"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/50"
+              onClick={() => setIsOpen(false)}
+            >
+              How It Works
+            </a>
+            <a
+              href="#audience"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/50"
+              onClick={() => setIsOpen(false)}
+            >
+              For You
+            </a>
+            <a href="#cta" className="btn-primary text-sm w-full text-center rounded-full mt-2" onClick={() => setIsOpen(false)}>
+              Get Started
+            </a>
+          </div>
+        </motion.div>
+      )}
     </motion.nav>
   );
 };
