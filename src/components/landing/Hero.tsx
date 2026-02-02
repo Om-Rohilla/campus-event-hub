@@ -1,11 +1,20 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
+import collegeBuilding from "@/assets/college-building.png";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 bg-gradient-surface">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 bg-gradient-hero opacity-5" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* College Building Background */}
+      <div className="absolute inset-0">
+        <img 
+          src={collegeBuilding} 
+          alt="College Campus" 
+          className="w-full h-full object-cover"
+        />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-primary/70" />
+      </div>
 
       <div className="section-container relative z-10">
         <div className="max-w-4xl mx-auto text-center">
@@ -14,10 +23,10 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 border border-white/30 mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-            <span className="text-sm font-medium text-primary">
+            <span className="text-sm font-medium text-white">
               Now live at IILM campuses
             </span>
           </motion.div>
@@ -27,7 +36,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold text-foreground leading-[1.1] mb-6"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white leading-[1.1] mb-6"
           >
             Run campus events{" "}
             <span className="relative">
@@ -55,7 +64,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             Create events once. Registration, QR entry, and attendance—automated.
             The complete platform for campus event management.
@@ -72,7 +81,7 @@ const Hero = () => {
               Get Started
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </a>
-            <a href="#solution" className="btn-secondary group">
+            <a href="#solution" className="inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold rounded-lg transition-all duration-300 bg-white/20 text-white border border-white/30 hover:bg-white/30 backdrop-blur-sm group">
               <Play className="w-4 h-4" />
               How It Works
             </a>
@@ -85,25 +94,25 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="mt-16 pt-8"
           >
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white/70 mb-4">
               Trusted by campus communities
             </p>
             <div className="flex items-center justify-center gap-8 flex-wrap">
-              <div className="flex items-center gap-2 text-muted-foreground/60">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <span className="font-display font-bold text-primary text-sm">100+</span>
+              <div className="flex items-center gap-2 text-white/80">
+                <div className="w-10 h-10 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <span className="font-display font-bold text-white text-sm">100+</span>
                 </div>
                 <span className="text-sm">Events Hosted</span>
               </div>
-              <div className="flex items-center gap-2 text-muted-foreground/60">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <span className="font-display font-bold text-primary text-sm">5K+</span>
+              <div className="flex items-center gap-2 text-white/80">
+                <div className="w-10 h-10 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <span className="font-display font-bold text-white text-sm">5K+</span>
                 </div>
                 <span className="text-sm">Students</span>
               </div>
-              <div className="flex items-center gap-2 text-muted-foreground/60">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <span className="font-display font-bold text-primary text-sm">98%</span>
+              <div className="flex items-center gap-2 text-white/80">
+                <div className="w-10 h-10 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <span className="font-display font-bold text-white text-sm">98%</span>
                 </div>
                 <span className="text-sm">Satisfaction</span>
               </div>
