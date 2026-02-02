@@ -18,12 +18,14 @@ import {
     Shield,
     Ticket
 } from 'lucide-react';
-import { getEventById, registerForEvent, findRegistrationByEmail } from '@/lib/mockData';
+import { getCurrentUser, getEventById, registerForEvent, findRegistrationByEmail } from '@/lib/mockData';
 import { Event, Registration } from '@/types';
 
 const EventRegistrationPage = () => {
     const { eventId } = useParams<{ eventId: string }>();
     const navigate = useNavigate();
+
+    const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
 
     const [event, setEvent] = useState<Event | null>(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -40,6 +42,18 @@ const EventRegistrationPage = () => {
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
     useEffect(() => {
+        const user = getCurrentUser();
+        if (user?.role === 'student') {
+            setCurrentUserEmail(user.email);
+            setFormData(prev => ({
+                ...prev,
+                name: user.name || prev.name,
+                email: user.email || prev.email,
+                phone: user.phone || prev.phone,
+                studentId: user.collegeId || prev.studentId,
+            }));
+        }
+
         if (!eventId) {
             setError('Invalid event link');
             setIsLoading(false);
@@ -114,10 +128,12 @@ const EventRegistrationPage = () => {
 
         if (!validateForm() || !eventId) return;
 
+        const emailToUse = currentUserEmail || formData.email;
+
         setIsSubmitting(true);
 
         // Check if already registered
-        const existing = findRegistrationByEmail(eventId, formData.email);
+        const existing = findRegistrationByEmail(eventId, emailToUse);
         if (existing) {
             setExistingRegistration(existing);
             setIsSubmitting(false);
@@ -129,7 +145,7 @@ const EventRegistrationPage = () => {
 
         const registration = registerForEvent(eventId, {
             name: formData.name,
-            email: formData.email,
+            email: emailToUse,
             phone: formData.phone || undefined,
             studentId: formData.studentId || undefined,
         });
@@ -473,6 +489,7 @@ const EventRegistrationPage = () => {
                                                 value={formData.email}
                                                 onChange={(e) => handleChange('email', e.target.value)}
                                                 placeholder="your.email@example.com"
+                                                readOnly={!!currentUserEmail}
                                                 className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 text-sm transition-all ${
                                                     formErrors.email
                                                         ? 'border-red-300 bg-red-50/50 focus:border-red-500 focus:ring-red-200'

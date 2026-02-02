@@ -44,6 +44,16 @@ const StudentDashboard = () => {
     const [selectedQR, setSelectedQR] = useState<RegistrationWithEvent | null>(null);
 
     useEffect(() => {
+        document.body.style.overflow = 'unset';
+        document.documentElement.style.overflow = 'unset';
+
+        return () => {
+            document.body.style.overflow = 'unset';
+            document.documentElement.style.overflow = 'unset';
+        };
+    }, []);
+
+    useEffect(() => {
         const currentUser = getCurrentUser();
         if (!currentUser || currentUser.role !== 'student') {
             navigate('/');
@@ -63,6 +73,12 @@ const StudentDashboard = () => {
             setUserRegistrations(registrations);
         }
     }, [navigate]);
+
+    useEffect(() => {
+        if (!user?.email) return;
+        if (activeTab !== 'registrations' && activeTab !== 'qr-passes') return;
+        setUserRegistrations(getUserRegistrations(user.email));
+    }, [activeTab, user?.email]);
 
     // Filter events
     useEffect(() => {
@@ -552,7 +568,7 @@ const StudentDashboard = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-surface overflow-x-hidden">
+        <div className="min-h-screen bg-gradient-surface overflow-x-hidden overflow-y-auto">
             {/* Mobile Header */}
             <header className="lg:hidden bg-white border-b border-border/50 sticky top-0 z-40">
                 <div className="px-4 py-3 flex items-center justify-between">

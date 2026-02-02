@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 type AuthStep = 'auth' | 'otp' | 'role' | 'student-onboarding' | 'organizer-onboarding' | null;
 
@@ -15,6 +15,16 @@ const AuthModalContext = createContext<AuthModalContextType | undefined>(undefin
 export const AuthModalProvider = ({ children }: { children: ReactNode }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [currentStep, setCurrentStep] = useState<AuthStep>(null);
+
+    useEffect(() => {
+        if (!isOpen) {
+            document.body.style.overflow = 'unset';
+        }
+
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
 
     const openAuth = () => {
         setCurrentStep('auth');
